@@ -28,7 +28,7 @@ func TestProvider_impl(t *testing.T) {
 	var _ terraform.ResourceProvider = Provider()
 }
 
-func testAccPreCheck(t *testing.T) {
+func testAccPreCheck(t *testing.T) { //nolint:deadcode,unused
 	if v := os.Getenv("SLACK_TOKEN"); v == "" {
 		t.Fatal("SLACK_TOKEN must be set for acceptance tests")
 	}
