@@ -1,23 +1,22 @@
 project_name: terraform-provider-slack
 
-before:
-  hooks: []
-
 builds:
-  - binary: terraform-provider-athenz
+  - binary: terraform-provider-slack
     env:
       - CGO_ENABLED=0
+      - GOFLAGS=-mod=vendor
     goos:
       - darwin
       - linux
     goarch:
       - amd64
+    ldflags: -extldflags '-static'
 
-archive:
-  format: binary
-  name_template: "terraform-provider-slack-{{ .Os }}-{{ .Arch }}"
-  files:
-    - nothing.*
+archives:
+  - format: binary
+    name_template: "{{.ProjectName}}-{{.Os}}-{{.Arch}}"
+    files:
+      - nothing.*
 
 release:
   github:

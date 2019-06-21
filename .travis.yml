@@ -9,20 +9,12 @@ env:
   global:
     GO111MODULE=on
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - go: tip
-  include:
-  - go: "1.12.x"
-    name: "Code Lint"
-    script: make lint
-  - go: "1.12.x"
-    name: "Code UnitTest"
-    script: make test
-
 install:
-- make tools
+  - make tools
+
+script:
+  - make lint
+  - make test
 
 branches:
   only:
@@ -31,7 +23,6 @@ branches:
 
 deploy:
   - provider: script
-    skip_cleanup: true
     script: curl -sL https://git.io/goreleaser | bash
     on:
       tags: true
