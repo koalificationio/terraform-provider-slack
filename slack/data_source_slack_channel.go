@@ -48,7 +48,7 @@ func dataSourceSlackChannelRead(d *schema.ResourceData, meta interface{}) error 
 		Limit: 100,
 	}
 
-	var allChannels []slack.Channel
+	var channel slack.Channel
 
 	for {
 		var cs []slack.Channel
@@ -58,16 +58,20 @@ func dataSourceSlackChannelRead(d *schema.ResourceData, meta interface{}) error 
 			// Slack rate limit tire 2 https://api.slack.com/docs/rate-limits#tier_t2
 			if r, ok := err.(*slack.RateLimitedError); ok {
 				log.Printf("[INFO] got rate limited by Slack API, sleep for %v", r.RetryAfter)
-				time.Sleep(r.RetryAfter)
-				// Add 3s because its never enough
-				time.Sleep(3 * time.Second)
+				// Add 1s because its never enough
+				time.Sleep(r.RetryAfter + 1*time.Second)
 				continue
 			} else {
 				return fmt.Errorf("Could not fetch channels: %v", err)
 			}
 		}
 
-		allChannels = append(allChannels, cs...)
+		for _, c := range cs {
+			if c.Name == name {
+				channel = c
+				break
+			}
+		}
 
 		if cursor == "" {
 			break
@@ -79,14 +83,6 @@ func dataSourceSlackChannelRead(d *schema.ResourceData, meta interface{}) error 
 		}
 
 		time.Sleep(3 * time.Second)
-	}
-
-	var channel slack.Channel
-	for _, c := range allChannels {
-		if c.Name == name {
-			channel = c
-			break
-		}
 	}
 
 	if channel.Name == "" {
