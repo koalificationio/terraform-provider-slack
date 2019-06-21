@@ -1,7 +1,5 @@
 dist: xenial
 sudo: required
-services:
-  - docker
 language: go
 
 git:
@@ -9,7 +7,7 @@ git:
 
 env:
   global:
-    GOFLAGS=-mod=vendor
+    GO111MODULE=on
 
 matrix:
   fast_finish: true
@@ -22,20 +20,20 @@ matrix:
   - go: "1.12.x"
     name: "Code UnitTest"
     script: make test
-  - go: "1.12.x"
-    name: "Website"
-    script:
-      - make website-test
-      - make website-lint
 
 install:
-# This script is used by the Travis build to install a cookie for
-# go.googlesource.com so rate limits are higher when using `go get` to fetch
-# packages that live there.
-# See: https://github.com/golang/go/issues/12933
-- bash scripts/gogetcookie.sh
 - make tools
 
 branches:
   only:
     - master
+    - /^v.*$/
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: curl -sL https://git.io/goreleaser | bash
+    on:
+      tags: true
+      all_branches: true
+      condition: $TRAVIS_OS_NAME = linux

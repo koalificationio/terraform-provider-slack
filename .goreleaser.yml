@@ -1,0 +1,25 @@
+project_name: terraform-provider-slack
+
+before:
+  hooks: []
+
+builds:
+  - binary: terraform-provider-athenz
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+
+archive:
+  format: binary
+  name_template: "terraform-provider-slack-{{ .Os }}-{{ .Arch }}"
+  files:
+    - nothing.*
+
+release:
+  github:
+    owner: janitors
+    name: terraform-provider-slack
