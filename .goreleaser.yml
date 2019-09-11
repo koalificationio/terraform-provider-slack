@@ -20,5 +20,5 @@ archives:
 
 release:
   github:
-    owner: janitors
+    owner: koalificationio
     name: terraform-provider-slack
