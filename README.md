@@ -1,6 +1,6 @@
 # terraform-provider-slack
 
-[![Build Status](https://travis-ci.org/janitors/terraform-provider-slack.svg?branch=master)](https://travis-ci.org/janitors/terraform-provider-slack)
+[![Build Status](https://travis-ci.org/koalificationio/terraform-provider-slack.svg?branch=master)](https://travis-ci.org/koalificationio/terraform-provider-slack)
 
 Terraform provider for Slack
 
@@ -11,11 +11,11 @@ Check documentation in [./website](./website) folder.
 
 ## Developing the Provider
 
-Clone repository to: `$HOME/development/janitors/`
+Clone repository to: `$HOME/development/koalificationio/`
 
 ```sh
-$ mkdir -p $HOME/development/janitors/; cd $HOME/development/janitors/
-$ git clone https://github.com/janitors/terraform-provider-slack
+$ mkdir -p $HOME/development/koalificationio/; cd $HOME/development/koalificationio/
+$ git clone https://github.com/koalificationio/terraform-provider-slack
 ...
 ```
 
