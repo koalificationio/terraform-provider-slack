@@ -52,11 +52,22 @@ func dataSourceSlackUserRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	d.SetId(user.ID)
-	d.Set("team_id", user.TeamID)
-	d.Set("real_name", user.Profile.RealName)
-	d.Set("is_owner", user.IsOwner)
-	d.Set("is_admin", user.IsAdmin)
-	d.Set("is_bot", user.IsBot)
+
+	if err := d.Set("team_id", user.TeamID); err != nil {
+		return fmt.Errorf("Error setting team_id: %v", err)
+	}
+	if err := d.Set("real_name", user.Profile.RealName); err != nil {
+		return fmt.Errorf("Error setting real_name: %v", err)
+	}
+	if err := d.Set("is_owner", user.IsOwner); err != nil {
+		return fmt.Errorf("Error setting is_owner: %v", err)
+	}
+	if err := d.Set("is_admin", user.IsAdmin); err != nil {
+		return fmt.Errorf("Error setting is_admin: %v", err)
+	}
+	if err := d.Set("is_bot", user.IsBot); err != nil {
+		return fmt.Errorf("Error setting is_bot: %v", err)
+	}
 
 	return nil
 }
