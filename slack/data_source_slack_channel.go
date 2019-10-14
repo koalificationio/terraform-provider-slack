@@ -90,10 +90,19 @@ func dataSourceSlackChannelRead(d *schema.ResourceData, meta interface{}) error 
 	}
 
 	d.SetId(channel.ID)
-	d.Set("is_general", channel.IsGeneral)
-	d.Set("is_archived", channel.IsArchived)
-	d.Set("is_shared", channel.IsShared)
-	d.Set("is_private", channel.IsPrivate)
+
+	if err := d.Set("is_general", channel.IsGeneral); err != nil {
+		return fmt.Errorf("Error setting is_general: %v", err)
+	}
+	if err := d.Set("is_archived", channel.IsArchived); err != nil {
+		return fmt.Errorf("Error setting is_archived: %v", err)
+	}
+	if err := d.Set("is_shared", channel.IsShared); err != nil {
+		return fmt.Errorf("Error setting is_shared: %v", err)
+	}
+	if err := d.Set("is_private", channel.IsPrivate); err != nil {
+		return fmt.Errorf("Error setting is_private: %v", err)
+	}
 
 	return nil
 }
